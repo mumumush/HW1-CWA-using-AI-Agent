@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any, Tuple
 
 CWA_API_URL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001"
+DEFAULT_API_KEY = "CWA-55FDA6D3-A43C-4AE0-BB30-E62D5F684FB2"
 
 COUNTY_REGIONS = {
     # 北部
@@ -156,17 +157,18 @@ def get_demo_weather_records() -> List[Dict[str, Any]]:
     return records
 
 
-def fetch_cwa_weather(api_key: str = "") -> Tuple[List[Dict[str, Any]], str, bool]:
+def fetch_cwa_weather(api_key: str = None) -> Tuple[List[Dict[str, Any]], str, bool]:
     """
     Fetch weather forecasts from CWA API, fallback to demo dataset if key is invalid or absent.
     Returns: (records, status_message, is_live_api)
     """
-    if not api_key:
+    effective_key = api_key if (api_key is not None and api_key != "") else DEFAULT_API_KEY
+    if not effective_key:
         return get_demo_weather_records(), "使用示範數據（未輸入 CWA API Key）", False
         
     try:
         params = {
-            "Authorization": api_key,
+            "Authorization": effective_key,
             "format": "JSON"
         }
         resp = requests.get(CWA_API_URL, params=params, timeout=10)

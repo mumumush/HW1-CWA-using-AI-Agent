@@ -80,11 +80,11 @@ with st.sidebar:
     
     # API Key Input
     api_key = st.text_input(
-        "🔑 CWA API 授權碼 (可選)",
-        value="",
+        "🔑 CWA API 授權碼",
+        value="CWA-55FDA6D3-A43C-4AE0-BB30-E62D5F684FB2",
         type="password",
         placeholder="例如：CWA-XXXXXXXX-XXXX...",
-        help="如無授權碼將自動使用內建完整台灣示範氣象數據，隨開即用！"
+        help="已預設套用您的中央氣象署專屬授權碼！"
     )
     st.caption("👉 免費申請授權碼：[氣象署開放資料平臺](https://opendata.cwa.gov.tw/)")
     
